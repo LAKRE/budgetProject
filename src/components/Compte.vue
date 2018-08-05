@@ -3,6 +3,10 @@
     <p>hello</p>
 
     <b-button @click="newRow">+</b-button>
+    <b-button @click="rmlastRow">rm last row</b-button>
+	<b-button @click="rmRow">rm one row</b-button>
+	<b-button @click="rmallRow">rm all row</b-button>
+	<b-button @click="sum">sum</b-button>
     <table>
         <tr>
             <th>id</th>
@@ -32,13 +36,13 @@ export default {
                 id:0,
                 date: '2018-07-22',
                 libelle: 'sandwich',
-                prix: '5'
+                prix: 5
                },
                 {
                 id:1,
                 date: '2018-07-22',
                 libelle: 'céréales',
-                prix: '3'
+                prix: 3
                }
             ]
        }
@@ -52,11 +56,52 @@ export default {
                 libelle:"new" ,
                 prix: "new"
            });
+       },
+	   
+	   rmlastRow(event){
+           this.items.splice(
+                this.items.length-1,
+                1    
+           );
+       },
+	   
+	  rmallRow(event){
+             for(var i = 0 ; i < this.items.length ; i++) {
+				     this.items.splice(
+							this.items[i]
+					   ); 
+				}		    
+       },
+	   
+	   rmRow(event){
+				   for(var i = 0 ; i < this.items.length ; i++) {
+				       if (this.items[i].libelle == 'rmv'){
+					     this.items.splice(
+							this.items[i].id,
+							1						
+					     );
+					   }
+				   }
+				   
+       },
+	   sum(event){
+		   var leprix = 0;
+           for(var i = 0 ; i < this.items.length ; i++) {
+                  if (this.items[i].prix != ''){		   
+				     leprix = leprix + this.items[i].prix;
+					 
+                    }
+				}	
+            this.items.push({
+						id:this.items.length,
+						date:"date",
+						libelle:"sum" ,
+						prix: leprix
+				   });				
+           
        }
-
-   }
-
-}
+        }
+     }
 </script>
 <style>
 .main{
