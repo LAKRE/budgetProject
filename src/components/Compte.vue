@@ -2,7 +2,7 @@
 <div class='main'>
     <p>hello</p>
 
-    <b-button @click="newRow">+</b-button>
+    <b-button v-on:click="newRow">+</b-button>
     <b-button @click="rmlastRow">rm last row</b-button>
 	<b-button @click="rmallRow">rm all row</b-button>
 	<b-button @click="rmoneRow">rm one row</b-button>
@@ -43,7 +43,7 @@
             <th>prix:</th>
         </tr>
 	    <tr v-for="additem in additems" :key="additem.id">
-		 <td><input v-model="additem.date"></td>
+		 <td><date-picker v-model="additem.date" type="datetime" format="YYYY-MM-DD" lang="fr" :first-day-of-week="1"></date-picker></td>
         <td><input v-model="additem.libelle"></td>
         <td><input v-model="additem.prix"></td>
         <b-button @click="addRow">add row</b-button>				
@@ -57,21 +57,25 @@
         </tr>
         <tr v-for="item in items" :key="item.id">
         <td>{{item.id}}</td>    
-        <td><input v-model="item.date"></td>
+        <td>{{item.date}}</td>
         <td><input v-model="item.libelle"></td>
         <td><input v-model="item.prix"></td>
         </tr>
     </table>
-</div>
-       
+	
+</div>     
 </template>
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import DatePicker from 'vue2-datepicker'
+
 export default {
    name:'Compte',
+   components: { DatePicker },
    data() {
        return{
+	     
            items:[
                {
                 id:0,
@@ -249,6 +253,7 @@ export default {
 	   addRow(evt){
 				 var p = this.items.length;
 				 var ladate = this.additems[0].date;
+				 
 				 var lelibelle = this.additems[0].libelle;
 				 var leprix = this.additems[0].prix;
 			     this.items.push({
@@ -256,7 +261,9 @@ export default {
 						date:ladate,
 						libelle: lelibelle,
 						prix: leprix
-				   });	   
+				   });	
+				   
+
        },
 	   rfreshRow(evt){
            if ((this.sumitems.length == 0)){
